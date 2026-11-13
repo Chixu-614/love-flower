@@ -1,0 +1,86 @@
+@import url('./intro.css');
+:root{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;color:#51443d;background:#f3eee5;font-synthesis:none}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid #d7c8bb;border-radius:30px;background:#fff9f0b8;color:inherit;padding:11px 19px;transition:background .2s}button:hover{background:#efe0d3}button:focus-visible{outline:2px solid #995565;outline-offset:3px}.primary{background:#82505c;color:#fff;border-color:#82505c}.primary:hover{background:#693f4a}.quiet{border:0;background:none;font-size:11px;padding:0}main{height:100svh;min-height:580px;display:flex;flex-direction:column;overflow:hidden}header{z-index:1;padding:30px 7vw 0;pointer-events:none}header button{float:right;pointer-events:auto}.brand{font-size:11px;letter-spacing:4px}h1{font:normal clamp(24px,4vw,38px) Georgia,"Songti SC",serif;margin:23px 0 10px}header p{font-size:13px;color:#8d7c70;margin:0}#stage{position:relative;flex:1;min-height:230px;touch-action:none}canvas{display:block;width:100%;height:100%}#loading{position:absolute;top:40%;width:100%;text-align:center;color:#988476}footer{padding:0 15px 25px;text-align:center;z-index:1}.hint{font-size:11px;letter-spacing:1px;color:#97867b;margin:0 0 18px}nav{display:flex;justify-content:center;gap:10px}.secondary{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:17px;color:#a18c7d}.secondary button{border:0;background:none;font-size:11px;padding:5px}.secondary span{font-size:10px}dialog{border:1px solid #dfd1c3;background:#fffaf2;color:inherit;border-radius:20px;padding:38px 30px;max-width:520px;width:calc(100% - 32px);max-height:86svh;box-shadow:0 20px 100px #49322626}dialog::backdrop{background:#493b3448;backdrop-filter:blur(5px)}.close{position:absolute;right:12px;top:10px;border:0;background:none;font-size:25px;padding:0 8px}.eyebrow{font-size:9px;letter-spacing:3px;color:#ab8975}h2{font-family:Georgia,"Songti SC",serif;font-weight:400;margin:22px 0}#letterText{white-space:pre-wrap;line-height:2.1;font-size:15px;overflow-wrap:anywhere}#letterFrom{text-align:right;margin-top:35px;font-size:13px;color:#96735e}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:flex;flex-direction:column;gap:7px;font-size:12px;margin-bottom:12px}input,select,textarea{width:100%;border:1px solid #dfd1c3;background:#fffdf8;border-radius:8px;padding:9px;color:inherit}input[type=color]{height:39px;padding:3px}.check{flex-direction:row;align-items:center}.check input{width:auto}textarea{resize:vertical}details{margin-top:24px;font-size:12px;line-height:1.8}details button{margin-top:8px}.privacy{font-size:11px;color:#9b8574;line-height:1.8}#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#51443ded;color:#fff;border-radius:10px;padding:12px 18px;font-size:12px;z-index:20;max-width:90%;width:max-content;opacity:0;pointer-events:none;transition:opacity .2s}#toast.show{opacity:1}@media(max-width:600px){header{padding:25px 24px 0}h1{margin-top:24px}nav{gap:7px}nav button{padding:11px 14px;font-size:13px}footer{padding-bottom:18px}.secondary{gap:4px}dialog{padding:34px 23px}}@media(max-height:720px){header{padding-top:15px}h1{margin-top:12px;font-size:25px}footer{padding-bottom:12px}.hint{margin-bottom:10px}.secondary{margin-top:9px}}
+
+/* A softly unfolding letter: transform/opacity only, no WebGL changes. */
+#letterDialog{padding:0;overflow:auto;background:#fffaf2;perspective:1000px}
+#letterDialog .close{z-index:2;background:#fffaf2d9}
+.letter-paper{position:relative;isolation:isolate;padding:40px 30px 30px;min-height:360px;background:linear-gradient(180deg,transparent 49.6%,#d9c7b72b 50%,transparent 50.4%),#fffaf2;transform-origin:50% 0}
+#letterDialog[open]{animation:letter-arrive .36s ease-out both}
+#letterDialog[open] .letter-paper{animation:paper-unfold .85s cubic-bezier(.2,.65,.25,1) both}
+#letterDialog[open] #letterText{animation:ink-appear .6s .32s both}
+.letter-paper .eyebrow{position:relative;max-width:75%;line-height:1.8;font-size:8px;letter-spacing:2px}
+.letter-paper h2{position:relative;margin-top:29px;padding-right:38px}
+.letter-art{position:absolute;right:24px;top:20px;width:65px;height:85px;transform:rotate(12deg);pointer-events:none;z-index:-1;opacity:.85}
+.flower-sticker{width:65px;height:78px;filter:drop-shadow(1px 2px 0 #e1d6c2)}
+.paper-tape{position:absolute;top:1px;left:13px;width:43px;height:13px;background:#ddc49b80;transform:rotate(-25deg)}
+.letter-doodle{width:110px;height:26px;margin:14px 0 -10px;opacity:.8}.letter-doodle svg{width:100%;height:100%}
+#letterFrom{position:relative}#letterText{position:relative}
+@keyframes letter-arrive{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes paper-unfold{0%{opacity:.2;transform:rotateX(-65deg) scaleY(.65)}55%{opacity:1;transform:rotateX(6deg) scaleY(1)}100%{opacity:1;transform:rotateX(0deg) scaleY(1)}}
+@keyframes ink-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@media(max-width:600px){.letter-paper{padding:36px 23px 28px}.letter-art{right:20px;top:23px;width:57px}.flower-sticker{width:57px}.letter-paper .eyebrow{max-width:78%;font-size:7px;letter-spacing:1.7px}}
+@media(prefers-reduced-motion:reduce){#letterDialog[open],#letterDialog[open] .letter-paper,#letterDialog[open] #letterText{animation:none}}
+
+.flower-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:10px 0 4px}.flower-actions button{font-size:13px;padding:8px 14px}.flower-actions [hidden]{display:none}
+
+/* Keepsake: a quiet title in the opening's warm, widely spaced Chinese style. */
+#greeting{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;font-size:clamp(20px,4.9vw,28px);letter-spacing:.12em;line-height:1.65;color:#74675d;margin:18px 0 7px;text-wrap:balance;font-weight:400}
+.maker-signature{font-family:"Kaiti SC",KaiTi,STKaiti,"Noto Serif CJK SC",cursive;font-style:italic;font-size:10px;letter-spacing:2px;color:#a59586;text-align:center;margin:32px 0 0;transform:rotate(-3deg)}
+#makerDialog{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+#makerDialog .close{position:sticky;float:right;top:0;z-index:3;background:#fffaf2;min-width:36px;min-height:36px}
+.choice-options{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}.choice-options button{font-size:12px;min-height:42px;padding:7px 10px;border-radius:12px;touch-action:manipulation}.choice-options button[aria-pressed="true"]{background:#82505c;color:white;border-color:#82505c}
+.color-code{font-family:monospace;font-size:13px;min-height:42px}.control-note{font-size:11px;line-height:1.7;color:#947d6d}.letter-tools{padding:0 23px 24px;text-align:center}.export-tools{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}.export-tools a{color:#82505c;padding:12px}#exportImage{display:block;width:100%;height:auto;border:1px solid #e8dccc}#exportDialog{overflow-y:auto}#exportDialog>p{font-size:12px;line-height:1.8}
+@media(max-width:380px){.fields{gap:10px}.choice-options button{font-size:11px;padding:6px 8px}.secondary{flex-wrap:wrap}}
+
+/* The opening Chinese title and page heading intentionally share one local font stack. */
+#introChinese,#greeting{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;font-weight:400;letter-spacing:.12em;fill:#74675d}
+[hidden]{display:none!important}
+
+/* polish4: centered live customization sheet */
+#makerDialog{max-height:62vh;max-height:62dvh;margin:auto;}
+#makerDialog::backdrop{background:rgba(55,40,32,.12);backdrop-filter:none;}
+#makerStatus{color:#886253;font-size:13px}
+
+/* Emphasize the actual airplane route, not a separate background shape. */
+
+#flight-path{stroke:#a77c69;stroke-width:2;stroke-dasharray:3 6;opacity:.95;}
+
+/* letter6: clean keepsake paper with a separate save area beneath it. */
+#letterDialog{background:transparent;border:0;box-shadow:none;overflow:auto;padding:0 0 4px;perspective:none;}
+#letterDialog .letter-paper{border:1px solid #dfd1c3;border-radius:20px;box-shadow:0 12px 45px #49322620;}
+#letterDialog .letter-tools{margin:14px 0 0;padding:12px 16px;background:#f3eee5;border:1px solid #dfd1c3;border-radius:16px;text-align:center;}
+#letterDialog .close{top:12px;right:12px;border-radius:50%;}
+.site-credit{font-size:9px;color:#a59586;letter-spacing:2px;margin:8px 0 0;}
+
+/* actions7: direct object interaction, clear customization entry. */
+.scene-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:400px;margin:0 auto}
+.scene-actions button{min-width:0;min-height:44px;font-size:clamp(11px,3.6vw,13px);padding:10px 3px;white-space:nowrap;touch-action:manipulation}
+.scene-actions [hidden]{display:block!important;visibility:hidden;pointer-events:none}
+.customize-action{margin:14px auto 0;max-width:340px}
+#makeButton{width:100%;min-height:48px;border-radius:15px;background:#82505c;border-color:#82505c;color:#fff;font-size:15px;letter-spacing:1px;padding:12px 20px;touch-action:manipulation}
+#makeButton:hover{background:#693f4a}
+#makeButton span{margin-left:12px}
+footer .secondary{margin-top:8px;gap:14px;flex-wrap:wrap}
+footer .secondary button{min-height:44px;padding:10px 12px;font-size:12px;color:#79665b;border-radius:12px;touch-action:manipulation}
+footer .hint{letter-spacing:0;font-size:11px;margin-bottom:12px}
+@media(max-height:720px){.customize-action{margin-top:9px}footer .secondary{margin-top:4px}footer .hint{margin-bottom:8px}}
+
+/* sugar8: tiny patisserie keepsakes, deliberately outside the focal area. */
+:root{background:#fff8e7}main{background:#fff8e7}
+#intro{background:radial-gradient(ellipse at 50% 43%,#fffdf4 0%,#fff8e7 64%,#faf0d9 100%)}
+.sweet-corners{position:absolute;inset:0;pointer-events:none;user-select:none;overflow:hidden}
+.sweet-corners .sweet{position:absolute;display:block;object-fit:contain;width:clamp(40px,8vw,76px);height:auto;opacity:.68;pointer-events:none;filter:drop-shadow(0 2px 1px #be9e7910)}
+#intro>.sweet-corners{z-index:0}#intro>svg,#intro>p,#intro>#skip{position:relative;z-index:1}#intro>#skip{position:absolute}
+#intro .intro-sweets .sweet{width:clamp(48px,12vw,94px)}
+.intro-sweets .sweet-1{left:7%;top:10%;transform:rotate(-17deg)}
+.intro-sweets .sweet-2{right:5%;top:19%;transform:rotate(18deg);opacity:.5}
+.intro-sweets .sweet-3{left:5%;bottom:24%;transform:rotate(-13deg)}
+.intro-sweets .sweet-4{right:7%;bottom:19%;transform:rotate(12deg)}
+.intro-sweets .sweet-5{left:38%;bottom:7%;transform:rotate(-7deg);opacity:.55}
+.stage-sweets{z-index:1}.stage-sweets .sweet{width:clamp(35px,10vw,65px);opacity:.57}
+.stage-sweets .sweet-1{left:3%;top:7%;transform:rotate(-20deg)}
+.stage-sweets .sweet-2{right:3%;top:15%;transform:rotate(15deg)}
+.stage-sweets .sweet-3{left:1%;top:63%;transform:rotate(-12deg);opacity:.46}
+.stage-sweets .sweet-4{right:1%;top:52%;transform:rotate(15deg);opacity:.43}
+@media(min-width:700px){.stage-sweets .sweet-1{left:12%}.stage-sweets .sweet-2{right:12%}.stage-sweets .sweet-3{left:8%}.stage-sweets .sweet-4{right:8%}}
+@media(max-height:650px){#intro .intro-sweets .sweet{width:44px}.intro-sweets .sweet-3{bottom:18%}.intro-sweets .sweet-4{bottom:16%}.stage-sweets .sweet{width:32px}}
